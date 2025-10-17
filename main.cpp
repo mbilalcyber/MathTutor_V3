@@ -330,7 +330,6 @@ int main() {
 
 
 
-
                 cout << "Thanks for playing, " << userName << "!" << endl;
 
             return 0;
