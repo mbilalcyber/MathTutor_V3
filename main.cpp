@@ -56,9 +56,11 @@ int main() {
                 __/ |
                |___/
 )" << std::endl;
-    cout << "Enter your full name: ";
-    getline(cin, userName);
 
+    cout << "Enter your full name: ";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, userName);
+    if (userName.empty()) userName = "Friend";
 
     do {
         leftNum = (rand() % 10) + 1;
