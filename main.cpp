@@ -41,8 +41,8 @@ int main() {
     string userInput = "y";
     string userName = "?";
 
-    const int MaxAttemps = 3;           // User has 3 tries per question
-    const int LevelRangeChange = 10;    // The jump between number range for levels
+    const int maxAttemps = 3;           // User has 3 tries per question
+    const int levelRangeChange = 10;    // The jump between number range for levels
 
 
     enum MathType { MT_ADD = 1, MT_SUB, MT_MUL, MT_DIV };
@@ -56,7 +56,7 @@ int main() {
 
 
     srand(time(0));
-    
+
     cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
     cout << "     __  __       _   _       _____      _                          " << endl;
     cout << "    |  \\/  | __ _| |_| |__   |_   _|   _| |_ ___  _ __             " << endl;
@@ -116,27 +116,45 @@ int main() {
                 correctAnswer = leftNum / rightNum;
                 break;
 
-
+                // if the program cant pick, it will give them this error code
             default:
-                cout << "Error: Contact Debbie." << endl;
+                cout << "Error: Contact Jacob or Bilal." << endl;
+                cout << "This shouldnt happen :(." << endl;
                 return -1;
         }
+        // allows user 3 attempts to give correct answer and tells them the level they are on
+        for (int i=1; i<= maxAttemps; i++) {
+            cout << "[Level " << level << "] " << userName << "what is "
+                    << leftNum << " " << mathSymbol << " " << rightNum << " equal?" << endl;
+            cout << "Your answer: ";
+            cin >> userAnswer;
 
-        cout << endl << userName << ", what is "
-         << leftNum << " " << mathSymbol << " " << rightNum << " ?" << endl;
-        cout << "Your answer: ";
-        cin >> userAnswer;
+            // checks if response is valid
+            while (!(cin >> userInput)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                cout << "Please enter a number:"   << endl; // tells user to give it a number if it was invalid
+            }
 
-        if (userAnswer == correctAnswer) {
-            cout << "Correct!" << endl;
+            // if answer is correct, it'll say congrats then break
+            if (userAnswer == correctAnswer) {
+                totalCorrect ++;
+                cout << "Correct!" << endl;
+                break;
+            }
+            //if incorrect, it'll say incorrect and break
+            if (i >= maxAttemps) {
+                cout << "Incorrect. The correct answer was " << correctAnswer << endl;
+            }
+
+            // Tells them how many attempts are left
+            else {
+                cout << "You have " << maxAttemps - i << " attempts left" << endl;
+            }
         }
-        else {
-            cout << "Incorrect. The correct answer was " << correctAnswer << endl;
+    } // ends user attempts
+    
+                cout << "Thanks for playing, " << userName << "!" << endl;
+
+            return 0;
         }
-
-        cout << "Thanks for playing, " << userName << "!" << endl;
-
-        while (userInput == "y" || userInput == "Y");
-
-    return 0;
-}
