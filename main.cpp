@@ -57,8 +57,6 @@ int main() {
     string userName;
 
 
-    srand(time(0));
-
     cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
     cout << "     __  __       _   _       _____      _                          " << endl;
     cout << "    |  \\/  | __ _| |_| |__   |_   _|   _| |_ ___  _ __             " << endl;
@@ -70,10 +68,10 @@ int main() {
     cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
     cout << endl;
 
-    cout << "Enter your full name: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     getline(cin, userName);
     if (userName.empty()) userName = "Friend";
+    cout << "Welcome " << userName << " to the Silly Simple Math Tutor!\n\n";
+
 
     do {
         if (level < 1) level = 1;
