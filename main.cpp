@@ -18,18 +18,29 @@
 #include <string>     // string and get line
 #include <cstdlib>    // rand and srand
 #include <ctime>      // time for random seed
-
+#include <limits>
 using namespace std;
 
 int main() {
     string userName = "?";
     int leftNum = 0;
     int rightNum = 0;
-    int mathType = 0;
     char mathSymbol = '?';
     int correctAnswer = 0;
     int userAnswer = 0;
     int temp = 0;
+    string userInput = "?";
+
+
+    enum MathType { MT_ADD = 1, MT_SUB, MT_MUL, MT_DIV };
+    MathType mathType = MT_ADD;
+    while (!(cin >> userName)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout<< "\tInvalid input!" << endl;
+        cout << "\tPlease enter a number: ";
+    } // end of get userAnswer while loop
+
 
     srand(time(0));
 
@@ -45,56 +56,59 @@ int main() {
     cout << "Enter your full name: ";
     getline(cin, userName);
 
-    leftNum = (rand() % 10) + 1;
-    rightNum = (rand() % 10) + 1;
-    mathType = (rand() % 4) + 1;
-    // Choose the operation using a switch
-    switch (mathType) {
-        case 1: // Doing Addition
-            mathSymbol = '+';
-        correctAnswer = leftNum + rightNum;
-        break;
-        // Subtraction: swap so answer is not negative
-        case 2:
-            if (leftNum < rightNum) {
-                temp = leftNum;
-                leftNum = rightNum;
-                rightNum = temp;
-            }
-        mathSymbol = '-';
-        correctAnswer = leftNum - rightNum;
-        break;
 
-        case 3: // Multiplication
-            mathSymbol = '*';
-        correctAnswer = leftNum * rightNum;
-        break;
+    do {
+        leftNum = (rand() % 10) + 1;
+        rightNum = (rand() % 10) + 1;
+        mathType = static_cast <MathType>(rand() % 4) + 1;
 
-        case 4: // Division: make a clean integer answer (no fractions)
-            mathSymbol = '/';
-        correctAnswer = leftNum;      // keep original left as the answer
-        leftNum = leftNum * rightNum;   // now leftNum / rightNum == original left
-        break;
+        switch (mathType) {
+            case 1: // Doing Addition
+                mathSymbol = '+';
+                correctAnswer = leftNum + rightNum;
+                break;
+                // Subtraction: swap so answer is not negative
+            case 2:
+                if (leftNum < rightNum) {
+                    temp = leftNum;
+                    leftNum = rightNum;
+                    rightNum = temp;
+                }
+                mathSymbol = '-';
+                correctAnswer = leftNum - rightNum;
+                break;
 
-        default:
-            cout << "Error: Contact Debbie." << endl;
-        return -1;
-    }
+            case 3: // Multiplication
+                mathSymbol = '*';
+                correctAnswer = leftNum * rightNum;
+                break;
 
-    // Single cout to display the full question line
-    cout << endl << userName << ", what is "
+            case 4: // Division: make a clean integer answer (no fractions)
+                mathSymbol = '/';
+                correctAnswer = leftNum;      // keep original left as the answer
+                leftNum = leftNum * rightNum;   // now leftNum / rightNum == original left
+                break;
+
+            default:
+                cout << "Error: Contact Debbie." << endl;
+                return -1;
+        }
+
+        cout << endl << userName << ", what is "
          << leftNum << " " << mathSymbol << " " << rightNum << " ?" << endl;
-    cout << "Your answer: ";
-    cin >> userAnswer;
+        cout << "Your answer: ";
+        cin >> userAnswer;
 
-    if (userAnswer == correctAnswer) {
-        cout << "Correct!" << endl;
-    }
-    else {
-        cout << "Incorrect. The correct answer was " << correctAnswer << endl;
-    }
+        if (userAnswer == correctAnswer) {
+            cout << "Correct!" << endl;
+        }
+        else {
+            cout << "Incorrect. The correct answer was " << correctAnswer << endl;
+        }
 
-    cout << "Thanks for playing, " << userName << "!" << endl;
+        cout << "Thanks for playing, " << userName << "!" << endl;
+
+    } while (userInput == "yes" || userInput == "y");
 
     return 0;
 }
