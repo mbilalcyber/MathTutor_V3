@@ -17,6 +17,7 @@
  * - Finally, it tells the user that this is all the program does at the moment.
 ***********************************************************************************************************************/
 
+
 #include <iostream>
 #include <string>
 #include <cstdlib>   // rand, srand
@@ -44,140 +45,6 @@ int readInt() {
 }
 
 int main() {
-    // random seed
-    srand(static_cast<unsigned>(time(0)));
-
-    // state variables
-    int totalCorrect = 0;
-    int totalIncorrect = 0;
-    int mathLevel = 1;                        // start at level 1
-    int levelRange = LEVEL_RANGE_CHANGE;      // current number range (1..levelRange)
-    string userInput = "?";                   // for y/yes/n/no
-    string userName;
-
-    cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
-    cout << "     __  __       _   _       _____      _                          " << endl;
-    cout << "    |  \\/  | __ _| |_| |__   |_   _|   _| |_ ___  _ __             " << endl;
-    cout << "    | |\\/| |/ _` | __| '_ \\    | || | | | __/ _ \\| '__|          " << endl;
-    cout << "    | |  | | (_| | |_| | | |   | || |_| | || (_) | |                " << endl;
-    cout << "    |_|  |_|\\__,_|\\__|_| |_|   |_| \\__,_|\\__\\___/|_|           " << endl;
-    cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
-    cout << "      Welcome to the Silly Simple Math Tutor  V3                    " << endl;
-    cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
-    cout << endl;
-
-    getline(cin, userName);
-    if (userName.empty()) userName = "Friend";
-    cout << "Welcome " << userName << " to the Silly Simple Math Tutor!\n\n";
-
-    // main question loop
-    do {
-        // generate numbers based on current range
-        int leftNum  = (rand() % levelRange) + 1;
-        int rightNum = (rand() % levelRange) + 1;
-
-        // choose a random math type (enum)
-        MathType mathType = static_cast<MathType>((rand() % 4) + 1);
-
-        // build a question and its correct answer
-        int correctAnswer = 0;
-        char op = '?';
-        switch (mathType) {
-            case MT_ADD:
-                op = '+';
-                correctAnswer = leftNum + rightNum;
-                break;
-            case MT_SUB:
-                op = '-';
-                // keep subtraction non-negative to match beginner style
-                if (leftNum < rightNum) {
-                    int t = leftNum; leftNum = rightNum; rightNum = t;
-                }
-                correctAnswer = leftNum - rightNum;
-                break;
-            case MT_MUL:
-                op = '*';
-                correctAnswer = leftNum * rightNum;
-                break;
-            case MT_DIV:
-                op = '/';
-                // force a clean integer answer: pick divisor and scale dividend
-                rightNum = (rand() % (max(1, levelRange / 2) )) + 1;
-                if (rightNum < 1) rightNum = 1;
-                {
-                    int maxK = max(1, levelRange / rightNum);
-                    int k = (rand() % maxK) + 1;
-                    leftNum = rightNum * k;  // divisible
-                }
-                correctAnswer = leftNum / rightNum;
-                break;
-        }
-
-        // give the user 3 attempts
-        bool solved = false;
-        for (int attempt = 1; attempt <= MAX_ATTEMPTS; ++attempt) {
-            cout << "[Level #" << mathLevel << "] " << userName
-                 << ", what does " << leftNum << op << rightNum << " = ";
-            int userAnswer = readInt();
-
-            if (userAnswer == correctAnswer) {
-                cout << "    Congrats! That was correct :)" << endl;
-                totalCorrect++;
-                solved = true;
-                break;
-            } else {
-                int left = MAX_ATTEMPTS - attempt;
-                if (left > 0) {
-                    cout << "    Bummer, that was incorrect." << endl;
-                    cout << "    You have " << left << " attempt(s) left." << endl;
-                } else {
-                    cout << "    Sorry, you are out of attempts." << endl;
-                    cout << "    The correct answer is " << correctAnswer << endl;
-                    totalIncorrect++;
-                }
-            }
-        }
-
-        // check for leveling up or down after the attempts
-        if (totalCorrect == 3) {
-            mathLevel++;
-            totalCorrect = 0;
-            totalIncorrect = 0;
-            levelRange += LEVEL_RANGE_CHANGE;
-            cout << "WooHoo - Leveling you UP to " << mathLevel << endl;
-            cout << "The numbers are now between 1 and " << levelRange << endl;
-        } else if (totalIncorrect == 3 && mathLevel > 1) {
-            mathLevel--;
-            totalCorrect = 0;
-            totalIncorrect = 0;
-            levelRange -= LEVEL_RANGE_CHANGE;
-            cout << "BooHoo - Leveling you DOWN to " << mathLevel << endl;
-            cout << "The numbers are now between 1 and " << levelRange << endl;
-        }
-
-        // ask to continue. not case sensitive and accepts y or n
-        // clear leftover newline from the last number read
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        while (true) {
-            cout << "Do you want to continue (y=yes | n=no)? ";
-            getline(cin, userInput);
-
-            // makes it lowercase
-            for (char &ch : userInput) ch = static_cast<char>(tolower(static_cast<unsigned char>(ch)));
-
-            if (userInput == "y" || userInput == "yes" ||
-                userInput == "n" || userInput == "no") {
-                break; // valid
-            } else {
-                cout << "Please type y, yes, n, or no.\n";
-            }
-        }
-
-    } while (userInput == "y" || userInput == "yes");
-
-    cout << "Thanks for playing " << userName << "! Come back soon to learn more!" << endl;
-    return 0;
-}int main() {
     //Variables
     char mathSymbol = '?';
 
@@ -323,10 +190,12 @@ int main() {
         level --;
         totalCorrect = 0;
         totalIncorrect = 0;
-        currentRange = currentRange;
+        currentRange -= currentRange;
         cout << "You leveled down. Your new level is" << level
         << "with numbers ranging from 1 to" << currentRange << endl;
     }
+
+
 
 
                 cout << "Thanks for playing, " << userName << "!" << endl;
