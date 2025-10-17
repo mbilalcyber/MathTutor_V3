@@ -30,23 +30,9 @@ using namespace std;
 // enum for math type
 enum MathType { MT_ADD = 1, MT_SUB, MT_MUL, MT_DIV };
 
-// DEBBIE: don't need this method - in fact you aren't even using it
-// read a valid integer (keeps asking until user types a number)
-int readInt() {
-    int value;
-    while (!(cin >> value)) {
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Please enter a number: ";
-    }
-    return value;
-}
-
 int main() {
     // DEBBIE: seeding the random should be after all variables
-	// random seed
-    srand(static_cast<unsigned>(time(0)));
-
+	
 	// state variables
     int leftNum = 0;
     int rightNum = 0;
@@ -65,10 +51,13 @@ int main() {
     string userInput = "?";
     string userName = "?";
 
+	// random seed
+    srand(static_cast<unsigned>(time(0)));
+
 	// DEBBIE: const variables should be the first variables in main and they need to be all UPPER_CASED
 	// DEBBIE: MAX_ATTEMPTS and LEVEL_RANGE_CHANGE
-    const int maxAttemps = 3;     // User has 3 tries per question
-    const int levelRange = 10;    // The jump between number range for levels
+    const int MAXATTEMPTS = 3;     // User has 3 tries per question
+    const int LEVELRANGE = 10;    // The jump between number range for levels
 
     cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
     cout << "     __  __       _   _       _____      _                          " << endl;
