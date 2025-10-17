@@ -17,7 +17,7 @@
  * - Finally, it tells the user that this is all the program does at the moment.
 ***********************************************************************************************************************/
 
-
+// DEBBIE: document all your includes
 #include <iostream>
 #include <string>
 #include <cstdlib>   // rand, srand
@@ -26,9 +26,11 @@
 #include <cctype>    // tolower
 using namespace std;
 
+// DEBBIE: this really should be inside main at the top
 // enum for math type
 enum MathType { MT_ADD = 1, MT_SUB, MT_MUL, MT_DIV };
 
+// DEBBIE: don't need this method - in fact you aren't even using it
 // read a valid integer (keeps asking until user types a number)
 int readInt() {
     int value;
@@ -41,10 +43,11 @@ int readInt() {
 }
 
 int main() {
-    // random seed
+    // DEBBIE: seeding the random should be after all variables
+	// random seed
     srand(static_cast<unsigned>(time(0)));
 
-    // state variables
+	// state variables
     int leftNum = 0;
     int rightNum = 0;
 
@@ -57,11 +60,13 @@ int main() {
     int totalCorrect = 0;
     int totalIncorrect = 0;
     int currentLevel = 1;
-    int currentRange = 1;
+    int currentRange = 1; // DEBBIE: should be initialized to a constant variable LEVEL_RANGE_CHANGE
 
     string userInput = "?";
     string userName = "?";
 
+	// DEBBIE: const variables should be the first variables in main and they need to be all UPPER_CASED
+	// DEBBIE: MAX_ATTEMPTS and LEVEL_RANGE_CHANGE
     const int maxAttemps = 3;     // User has 3 tries per question
     const int levelRange = 10;    // The jump between number range for levels
 
@@ -79,6 +84,7 @@ int main() {
     getline(cin, userName);
     if (userName.empty()) userName = "User";
     cout << "Welcome " << userName << " to the Silly Simple Math Tutor!\n\n";
+	// DEBBIE: NOTE - you only need one blank line for code logic separation
 
 
     // main question loop
@@ -112,6 +118,8 @@ int main() {
                 break;
 
             case 4: // Division: make a clean integer answer
+				// DEBBIE: do this how Chapter 2 & 3 (MathTutorV2) explains how to write this logic
+				// DEBBIE: also make sure your code is properly indented
                 mathSymbol = '/';
                 rightNum = (rand() % (currentRange / 2 + 1)) + 1; // divisor 1 (range/2+1)
                 if (rightNum < 1) rightNum = 1;
@@ -126,20 +134,24 @@ int main() {
 
                 // if the program cant pick, it will give them this error code
             default:
+				// DEBBIE: again look at how Ch 2 & 3 (MathTutorV2) is suppose to write this
+				// DEBBIE: you should be displaying the invalid mathType too
                 cout << "Error: Contact Jacob or Bilal." << endl;
                 cout << "This shouldnt happen :(" << endl;
                 return -1;
-        }
+        }// DEBBIE: always have a blank line before & after constructs
         // allows user 3 attempts to give correct answer and tells them the level they are on
         // It also asks them the question
         for (int i=1; i<= maxAttemps; i++) {
             cout << "[Level " << currentLevel << "] " << userName << "what is "
                     << leftNum << " " << mathSymbol << " " << rightNum << " equal?" << endl;
             cout << "Your answer: ";
-            cin >> userAnswer;
+            cin >> userAnswer; // DEBBIE: delete this line because the while loop is doing this for you
+
+			// DEBBIE: I recommend adding tabs (\t) for all output related to the current question
 
             // checks if response is valid
-            while (!(cin >> userAnswer)) {
+            while (!(cin >> userAnswer)) { // DEBBIE: fully document the while loop like I did in the assignment code example
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(),'\n');
                 cout << "Please enter a number:"   << endl; // tells user to give it a number if it was invalid
@@ -187,11 +199,15 @@ int main() {
             cout << "You leveled down. You're now on Level " << currentLevel
                  << " with numbers ranging from 1 to " << currentRange << endl;
 
-        } // end of main question loop
+        } // end of main question loop // DEBBIE: this is not the end of main loop - this is the end of the if statement
+
+		// DEBBIE: you need to have the code logic here for y/n input that I provided you in the assignment
+
+		// DEBBIE: this is where the end of the do-while should be for y/yes answer
 
     cout << "Thanks for playing, " << userName << "!" << endl;
     return 0;
 
-        return 0;
-    }
-}
+        return 0; // DEBBIE: don't need
+    } // don't need if you end your while loop on like 206 like I stated
+} // DEBBIE: end of main function
