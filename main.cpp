@@ -73,14 +73,14 @@ int main() {
     cout << "Welcome " << userName << " to the Silly Simple Math Tutor!\n\n";
 
 
+// main question loop
     do {
-        if (level < 1) level = 1;
-        currentRange = level * LevelRangeChange;  // Level 1 -> 10, Level 2 -> 20, ...
+        // generate numbers based on current range
+        int leftNum  = (rand() % levelRange) + 1;
+        int rightNum = (rand() % levelRange) + 1;
 
-        leftNum  = (rand() % currentRange) + 1;
-        rightNum = (rand() % currentRange) + 1;
-
-        mathType = static_cast <MathType>(rand() % 4) + 1;
+        // choose a random math type (enum)
+        MathType mathType = static_cast<MathType>((rand() % 4) + 1);
 
         switch (mathType) {
             case 1: // Doing Addition
