@@ -2,7 +2,7 @@
 * Title......: Math Tutor V3
 * Programmers: Muhammad Bilal, Jacob Lilly
 * Date.......: 2025.10.14
-* Git Repo: https://github.com/mbilalcyber/MathTutor.V3.git
+* Git Repo...: https://github.com/mbilalcyber/MathTutor.V3.git
 * Description:
  * - The program is designed to help users practice and learn basic math.
  * - It starts by telling a funny joke.
@@ -22,18 +22,29 @@
 #include <cstdlib>    // rand and srand
 #include <ctime>      // time for random seed
 #include <limits>
+
 using namespace std;
 
+
 int main() {
-    string userName = "?";
+    //Variables
+    char mathSymbol = '?';
+
     int leftNum = 0;
     int rightNum = 0;
-    char mathSymbol = '?';
     int correctAnswer = 0;
     int userAnswer = 0;
     int temp = 0;
-    string userInput = "?";
+    int totalCorrect = 0;
+    int totalIncorrect = 0;
+    int level = 1;
+    int currentRange = 1;
 
+    string userInput = "?";
+    string userName = "?";
+
+    const int MaxAttemps = 3;           // User has 3 tries per question
+    const int LebelRangeChange = 10;    // The jump between number range for levels 
 
     enum MathType { MT_ADD = 1, MT_SUB, MT_MUL, MT_DIV };
     MathType mathType = MT_ADD;
@@ -47,15 +58,18 @@ int main() {
 
     srand(time(0));
 
-    std::cout << R"( _____ _             _       ___  ___      _   _       _____     _
-/  ___(_)           | |      |  \/  |     | | | |     |_   _|   | |
-\ `--. _ _ __   __ _| | ___  | .  . | __ _| |_| |__     | |_   _| |_ ___  _ __
- `--. \ | '_ \ / _` | |/ _ \ | |\/| |/ _` | __| '_ \    | | | | | __/ _ \| '__|
-/\__/ / | | | | (_| | |  __/ | |  | | (_| | |_| | | |   | | |_| | || (_) | |
-\____/|_|_| |_|\__, |_|\___| \_|  |_/\__,_|\__|_| |_|   \_/\__,_|\__\___/|_|
-                __/ |
-               |___/
-)" << std::endl;
+    cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
+    cout << "     __  __       _   _       _____      _                          " << endl;
+    cout << "    |  \\/  | __ _| |_| |__   |_   _|   _| |_ ___  _ __             " << endl;
+    cout << "    | |\\/| |/ _` | __| '_ \\    | || | | | __/ _ \\| '__|          " << endl;
+    cout << "    | |  | | (_| | |_| | | |   | || |_| | || (_) | |                " << endl;
+    cout << "    |_|  |_|\\__,_|\\__|_| |_|   |_| \\__,_|\\__\\___/|_|           " << endl;
+    cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
+    cout << "      Welcome to the Silly Simple Math Tutor  V3                    " << endl;
+    cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
+    cout << endl;
+
+    
     cout << "Enter your full name: ";
     getline(cin, userName);
 
