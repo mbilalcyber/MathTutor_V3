@@ -323,7 +323,7 @@ int main() {
         level --;
         totalCorrect = 0;
         totalIncorrect = 0;
-        currentRange -= currentRange;
+        currentRange = currentRange;
         cout << "You leveled down. Your new level is" << level
         << "with numbers ranging from 1 to" << currentRange << endl;
     }
