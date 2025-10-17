@@ -45,34 +45,16 @@ int readInt() {
 }
 
 int main() {
-    //Variables
-    char mathSymbol = '?';
+    // random seed
+    srand(static_cast<unsigned>(time(0)));
 
-    int leftNum = 0;
-    int rightNum = 0;
-    int correctAnswer = 0;
-    int userAnswer = 0;
-    int temp = 0;
+    // state variables
     int totalCorrect = 0;
     int totalIncorrect = 0;
-    int level = 1;
-    int currentRange = 1;
-
-    string userInput = "y";
-    string userName = "?";
-
-    const int maxAttemps = 3;           // User has 3 tries per question
-    const int levelRangeChange = 10;    // The jump between number range for levels
-
-
-    enum MathType { MT_ADD = 1, MT_SUB, MT_MUL, MT_DIV };
-    MathType mathType = MT_ADD;
-    while (!(cin >> userName)) {
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "\tInvalid input!"           << endl;
-        cout << "\tPlease enter a number:"   << endl;
-    } // end of get userAnswer while loop
+    int mathLevel = 1;                        // start at level 1
+    int levelRange = LEVEL_RANGE_CHANGE;      // current number range (1..levelRange)
+    string userInput = "?";                   // for y/yes/n/no
+    string userName;
 
 
     srand(time(0));
