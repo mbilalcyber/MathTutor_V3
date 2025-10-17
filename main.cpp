@@ -42,7 +42,8 @@ int main() {
     string userName = "?";
 
     const int MaxAttemps = 3;           // User has 3 tries per question
-    const int LebelRangeChange = 10;    // The jump between number range for levels 
+    const int LevelRangeChange = 10;    // The jump between number range for levels
+
 
     enum MathType { MT_ADD = 1, MT_SUB, MT_MUL, MT_DIV };
     MathType mathType = MT_ADD;
@@ -73,8 +74,12 @@ int main() {
     if (userName.empty()) userName = "Friend";
 
     do {
-        leftNum = (rand() % 10) + 1;
-        rightNum = (rand() % 10) + 1;
+        if (level < 1) level = 1;
+        currentRange = level * LevelRangeChange;  // Level 1 -> 10, Level 2 -> 20, ...
+
+        leftNum  = (rand() % currentRange) + 1;
+        rightNum = (rand() % currentRange) + 1;
+
         mathType = static_cast <MathType>(rand() % 4) + 1;
 
         switch (mathType) {
@@ -98,11 +103,19 @@ int main() {
                 correctAnswer = leftNum * rightNum;
                 break;
 
-            case 4: // Division: make a clean integer answer (no fractions)
+            case 4: // Division: make a clean integer answer
                 mathSymbol = '/';
-                correctAnswer = leftNum;      // keep original left as the answer
-                leftNum = leftNum * rightNum;   // now leftNum / rightNum == original left
+                rightNum = (rand() % (currentRange / 2 + 1)) + 1; // divisor 1 (range/2+1)
+                if (rightNum < 1) rightNum = 1;
+            {
+                int maxK = currentRange / rightNum;
+                if (maxK < 1) maxK = 1;
+                int k = (rand() % maxK) + 1;
+                leftNum = rightNum * k; // divisible
+            }
+                correctAnswer = leftNum / rightNum;
                 break;
+
 
             default:
                 cout << "Error: Contact Debbie." << endl;
