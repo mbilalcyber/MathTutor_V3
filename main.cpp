@@ -25,37 +25,47 @@
 using namespace std;
 
 int main() {
-    string userName = "?";
+    //Variables
+    char mathSymbol = '?';
+
     int leftNum = 0;
     int rightNum = 0;
-    char mathSymbol = '?';
     int correctAnswer = 0;
     int userAnswer = 0;
     int temp = 0;
-    string userInput = "?";
+    int totalCorrect = 0;
+    int totalIncorrect = 0;
+    int level = 1;
+    int currentRange = 1;
 
+    string userInput = "y";
+    string userName = "?";
+
+    const int MaxAttemps = 3;           // User has 3 tries per question
+    const int LebelRangeChange = 10;    // The jump between number range for levels 
 
     enum MathType { MT_ADD = 1, MT_SUB, MT_MUL, MT_DIV };
     MathType mathType = MT_ADD;
     while (!(cin >> userName)) {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout<< "\tInvalid input!" << endl;
-        cout << "\tPlease enter a number: ";
+        cout << "\tInvalid input!"           << endl;
+        cout << "\tPlease enter a number:"   << endl;
     } // end of get userAnswer while loop
 
 
     srand(time(0));
-
-    std::cout << R"( _____ _             _       ___  ___      _   _       _____     _
-/  ___(_)           | |      |  \/  |     | | | |     |_   _|   | |
-\ `--. _ _ __   __ _| | ___  | .  . | __ _| |_| |__     | |_   _| |_ ___  _ __
- `--. \ | '_ \ / _` | |/ _ \ | |\/| |/ _` | __| '_ \    | | | | | __/ _ \| '__|
-/\__/ / | | | | (_| | |  __/ | |  | | (_| | |_| | | |   | | |_| | || (_) | |
-\____/|_|_| |_|\__, |_|\___| \_|  |_/\__,_|\__|_| |_|   \_/\__,_|\__\___/|_|
-                __/ |
-               |___/
-)" << std::endl;
+    
+    cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
+    cout << "     __  __       _   _       _____      _                          " << endl;
+    cout << "    |  \\/  | __ _| |_| |__   |_   _|   _| |_ ___  _ __             " << endl;
+    cout << "    | |\\/| |/ _` | __| '_ \\    | || | | | __/ _ \\| '__|          " << endl;
+    cout << "    | |  | | (_| | |_| | | |   | || |_| | || (_) | |                " << endl;
+    cout << "    |_|  |_|\\__,_|\\__|_| |_|   |_| \\__,_|\\__\\___/|_|           " << endl;
+    cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
+    cout << "      Welcome to the Silly Simple Math Tutor  V3                    " << endl;
+    cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
+    cout << endl;
 
     cout << "Enter your full name: ";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -72,8 +82,8 @@ int main() {
                 mathSymbol = '+';
                 correctAnswer = leftNum + rightNum;
                 break;
-                // Subtraction: swap so answer is not negative
-            case 2:
+
+            case 2: // Subtraction: swap so answer is not negative
                 if (leftNum < rightNum) {
                     temp = leftNum;
                     leftNum = rightNum;
@@ -113,7 +123,7 @@ int main() {
 
         cout << "Thanks for playing, " << userName << "!" << endl;
 
-    } while (userInput == "yes" || userInput == "y");
+        while (userInput == "y" || userInput == "Y");
 
     return 0;
 }
