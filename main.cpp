@@ -3,15 +3,18 @@
 * Programmers: Muhammad Bilal, Jacob Lilly
 * Date.......: 2025.10.14
 * Git Repo: https://github.com/mbilalcyber/MathTutor.V3.git
-* Description: This program is designed to teach you how to learn math.
-               It will tell them a funny joke, and it will ask the user's
-               name to greet them. Then, it will generate random numbers
-               and chose a operation to ask random simple math questions.
-               It will ask the user by their name the math question. It
-               will check their answer with the right answer. Then the
-               program will either say Correct, or incorect then give them
-               the right answer so they can learn. After that it will tell
-               the user that this is all the program does at this time
+* Description:
+ * - The program is designed to help users practice and learn basic math.
+ * - It starts by telling a funny joke.
+ * - It asks the user to enter their name and greets them personally.
+ * - The program generates two random numbers.
+ * - It randomly chooses one of the four operations: addition, subtraction, multiplication, or division.
+ * - It asks the user a math question using their name.
+ * - The user's answer is checked against the correct answer.
+ * - If the answer is correct, the program displays a "Correct" message.
+ * - If the answer is wrong, it shows the correct answer so the user can learn.
+ * - The program continues asking questions based on the user's choice.
+ * - Finally, it tells the user that this is all the program does at the moment.
 ***********************************************************************************************************************/
 
 #include <iostream>   // console input or output
