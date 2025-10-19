@@ -30,7 +30,10 @@ using namespace std;
 enum MathType { MT_ADD = 1, MT_SUB, MT_MUL, MT_DIV };
 
 int main() {
-    // DEBBIE: seeding the random should be after all variables
+	
+    // constants
+    const int MAX_ATTEMPTS = 3;          // user gets 3 tries per question
+    const int LEVEL_RANGE_CHANGE = 10;   // each level changes range by 10
 	
 	// state variables
     int leftNum = 0;
@@ -52,11 +55,6 @@ int main() {
 
 	// random seed
     srand(static_cast<unsigned>(time(0)));
-
-	// DEBBIE: const variables should be the first variables in main and they need to be all UPPER_CASED
-	// DEBBIE: MAX_ATTEMPTS and LEVEL_RANGE_CHANGE
-    const int MAXATTEMPTS = 3;     // User has 3 tries per question
-    const int LEVELRANGE = 10;    // The jump between number range for levels
 
     cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
     cout << "     __  __       _   _       _____      _                          " << endl;
