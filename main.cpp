@@ -108,29 +108,32 @@ switch (mathType) {
     }
 }
 
-            default:
-				// DEBBIE: again look at how Ch 2 & 3 (MathTutorV2) is suppose to write this
-				// DEBBIE: you should be displaying the invalid mathType too
-                cout << "Error: Contact Jacob or Bilal." << endl;
-                cout << "This shouldnt happen :(" << endl;
-                return -1;
-        }// DEBBIE: always have a blank line before & after constructs
-        // allows user 3 attempts to give correct answer and tells them the level they are on
-        // It also asks them the question
-        for (int i=1; i<= maxAttemps; i++) {
-            cout << "[Level " << currentLevel << "] " << userName << "what is "
-                    << leftNum << " " << mathSymbol << " " << rightNum << " equal?" << endl;
-            cout << "Your answer: ";
-            cin >> userAnswer; // DEBBIE: delete this line because the while loop is doing this for you
+	
+for (int i = 1; i <= MAX_ATTEMPTS; ++i) {
+    cout << "[Level " << mathLevel << "] " << userName
+         << ", what is " << leftNum << " " << mathSymbol << " " << rightNum << " = ";
 
-			// DEBBIE: I recommend adding tabs (\t) for all output related to the current question
+    // numeric guard
+    while (!(cin >> userAnswer)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "\tInvalid input. Please enter a number: ";
+    }
 
-            // checks if response is valid
-            while (!(cin >> userAnswer)) { // DEBBIE: fully document the while loop like I did in the assignment code example
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(),'\n');
-                cout << "Please enter a number:"   << endl; // tells user to give it a number if it was invalid
-            }
+    if (userAnswer == correctAnswer) {
+        totalCorrect++;
+        cout << "\tCorrect nice work dude!" << endl;
+        cout << "\tStreak: " << totalCorrect << " correct" << endl << endl;
+        break;
+    } else {
+        if (i == MAX_ATTEMPTS) {
+            totalIncorrect++;
+            cout << "\tOut of attempts. Correct answer: " << correctAnswer << endl;
+        } else {
+            cout << "\tNot quite. Attempts remaining: " << (MAX_ATTEMPTS - i) << endl;
+        }
+    }
+}
 
             // if answer is correct, it'll say congrats then break
             if (userAnswer == correctAnswer) {
