@@ -69,8 +69,7 @@ int main() {
 
     getline(cin, userName);
     if (userName.empty()) userName = "User";
-    cout << "Welcome " << userName << " to the Silly Simple Math Tutor!\n\n";
-	// DEBBIE: NOTE - you only need one blank line for code logic separation
+    cout << "Welcome " << userName << " to the Silly Simple Math Tutor!\n";
 
 
     // main question loop
