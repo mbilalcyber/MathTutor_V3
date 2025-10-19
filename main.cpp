@@ -34,7 +34,8 @@ int main() {
 
 	enum MathType { MT_ADD = 1, MT_SUB, MT_MUL, MT_DIV }; // Enum for math type
 	
-	// state variables
+	  // ===== State variables (then seed RNG) 
+	
     int leftNum = 0;
     int rightNum = 0;
 
@@ -44,15 +45,15 @@ int main() {
     int userAnswer = 0;
 
     int temp = 0;
-    int totalCorrect = 0;
-    int totalIncorrect = 0;
+    int totalCorrect = 0;     // streak of correct answers
+    int totalIncorrect = 0;   // streak of incorrect answers
     int currentLevel = 1;
-    int currentRange = 1; // DEBBIE: should be initialized to a constant variable LEVEL_RANGE_CHANGE
+    int currentRange = LEVEL_RANGE_CHANGE; // start with 1..10 
 
     string userInput = "?";
     string userName = "?";
 
-	// random seed
+    // Seed the random number generator (after variables)
     srand(static_cast<unsigned>(time(0)));
 
     cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
