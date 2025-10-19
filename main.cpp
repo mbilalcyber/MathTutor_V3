@@ -52,6 +52,9 @@ int main() {
 
     string userInput = "?";
     string userName = "?";
+	string wantJoke;
+
+	
 
     // Seed the random number generator (after variables)
     srand(static_cast<unsigned>(time(0)));
@@ -72,6 +75,21 @@ int main() {
     getline(cin, userName);
     if (userName.empty()) userName = "User";
     cout << "Welcome " << userName << " to the Silly Simple Math Tutor!" << endl << endl;
+
+	cout << "Do you want to hear a math joke before we begin? (y/n): ";
+getline(cin, wantJoke);
+
+// make answer lowercase
+for (char &ch : wantJoke) {
+    ch = tolower(ch);
+}
+
+if (wantJoke == "y" || wantJoke == "yes") {
+    // Display a joke here 
+    cout << "Alright! Here's one:\n";
+    cout << "Why was the equal sign so humble?\n";
+    cout << "Because it knew it wasn’t less than or greater than anyone else.\n\n";
+}
 
 
 
