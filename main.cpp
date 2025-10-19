@@ -17,13 +17,12 @@
  * - Finally, it tells the user that this is all the program does at the moment.
 ***********************************************************************************************************************/
 
-// DEBBIE: document all your includes
-#include <iostream>
-#include <string>
+#include <iostream>  // cout, cin
+#include <string>    // string, getline
 #include <cstdlib>   // rand, srand
-#include <ctime>     // time()
-#include <limits>    // numeric_limits
-#include <cctype>    // tolower
+#include <ctime>     // time() for srand seed
+#include <limits>    // numeric limits for input cleanup
+#include <cctype>    // tolower for y/yes/n/no processing
 using namespace std;
 
 // DEBBIE: this really should be inside main at the top
