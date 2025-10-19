@@ -25,15 +25,14 @@
 #include <cctype>    // tolower for y/yes/n/no processing
 using namespace std;
 
-// DEBBIE: this really should be inside main at the top
-// enum for math type
-enum MathType { MT_ADD = 1, MT_SUB, MT_MUL, MT_DIV };
 
 int main() {
 	
     // constants
     const int MAX_ATTEMPTS = 3;          // user gets 3 tries per question
     const int LEVEL_RANGE_CHANGE = 10;   // each level changes range by 10
+
+	enum MathType { MT_ADD = 1, MT_SUB, MT_MUL, MT_DIV }; // Enum for math type
 	
 	// state variables
     int leftNum = 0;
