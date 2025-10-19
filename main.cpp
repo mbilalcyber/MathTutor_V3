@@ -72,52 +72,42 @@ int main() {
     cout << "Welcome " << userName << " to the Silly Simple Math Tutor!\n";
 
 
-    // main question loop
-    do {
-        // generate numbers based on current range
-        int leftNum = (rand() % currentRange) + 1;
-        int rightNum = (rand() % currentRange) + 1;
+    // Build the question and compute the correct answer 
+switch (mathType) {
+    case MT_ADD: {
+        mathSymbol = '+';
+        correctAnswer = leftNum + rightNum;
+        break;
+    }
+    case MT_SUB: {
+        mathSymbol = '-';
+        if (leftNum < rightNum) {
+            temp = leftNum;
+            leftNum = rightNum;
+            rightNum = temp;
+        }
+        correctAnswer = leftNum - rightNum;
+        break;
+    }
+    case MT_MUL: {
+        mathSymbol = '*';
+        correctAnswer = leftNum * rightNum;
+        break;
+    }
+    case MT_DIV: {
+        // keep division as an integer result
+        mathSymbol = '/';
+        correctAnswer = leftNum;  // original left is the answer
+        leftNum *= rightNum;      // make dividend a multiple of divisor
+        break;
+    }
+    default: {
+        cout << "Invalid math type: " << static_cast<int>(mathType) << endl;
+        cout << "Exiting due to invalid operation. Please notify the instructor." << endl;
+        return -1;
+    }
+}
 
-        // choose a random math type (enum)
-        MathType mathType = static_cast<MathType>((rand() % 4) + 1);
-
-        switch (mathType) {
-            case 1: // Doing Addition
-                mathSymbol = '+';
-                correctAnswer = leftNum + rightNum;
-                break;
-
-            case 2: // Subtraction: swap so answer is not negative
-                if (leftNum < rightNum) {
-                    temp = leftNum;
-                    leftNum = rightNum;
-                    rightNum = temp;
-                }
-                mathSymbol = '-';
-                correctAnswer = leftNum - rightNum;
-                break;
-
-            case 3: // Multiplication
-                mathSymbol = '*';
-                correctAnswer = leftNum * rightNum;
-                break;
-
-            case 4: // Division: make a clean integer answer
-				// DEBBIE: do this how Chapter 2 & 3 (MathTutorV2) explains how to write this logic
-				// DEBBIE: also make sure your code is properly indented
-                mathSymbol = '/';
-                rightNum = (rand() % (currentRange / 2 + 1)) + 1; // divisor 1 (range/2+1)
-                if (rightNum < 1) rightNum = 1;
-            {
-                int maxK = currentRange / rightNum;
-                if (maxK < 1) maxK = 1;
-                int k = (rand() % maxK) + 1;
-                leftNum = rightNum * k; // divisible
-            }
-                correctAnswer = leftNum / rightNum;
-                break;
-
-                // if the program cant pick, it will give them this error code
             default:
 				// DEBBIE: again look at how Ch 2 & 3 (MathTutorV2) is suppose to write this
 				// DEBBIE: you should be displaying the invalid mathType too
