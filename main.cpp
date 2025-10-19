@@ -111,75 +111,62 @@ do {
     }
 
 	
-for (int i = 1; i <= MAX_ATTEMPTS; ++i) {
-    cout << "[Level " << mathLevel << "] " << userName
-         << ", what is " << leftNum << " " << mathSymbol << " " << rightNum << " = ";
+// ask user 3 attempts
+        for (int i = 1; i <= MAX_ATTEMPTS; i++) {
+            cout << "[Level " << currentLevel << "] " << userName
+                 << ", what is " << leftNum << " " << mathSymbol << " " << rightNum << " = ";
 
-    // numeric guard
-    while (!(cin >> userAnswer)) {
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "\tInvalid input. Please enter a number: ";
-    }
+            while (!(cin >> userAnswer)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Please enter a valid number: ";
+            }
 
-    if (userAnswer == correctAnswer) {
-        totalCorrect++;
-        cout << "\tCorrect nice work dude!" << endl;
-        cout << "\tStreak: " << totalCorrect << " correct" << endl << endl;
-        break;
-    } else {
-        if (i == MAX_ATTEMPTS) {
-            totalIncorrect++;
-            cout << "\tOut of attempts. Correct answer: " << correctAnswer << endl;
-        } else {
-            cout << "\tNot quite. Attempts remaining: " << (MAX_ATTEMPTS - i) << endl;
+            if (userAnswer == correctAnswer) {
+                cout << "Correct, nice job!" << endl;
+                totalCorrect++;
+                break;
+            } else {
+                if (i == MAX_ATTEMPTS) {
+                    totalIncorrect++;
+                    cout << "Incorrect. Correct answer was: " << correctAnswer << endl;
+                } else {
+                    cout << "Try again. Attempts left: " << (MAX_ATTEMPTS - i) << endl;
+                }
+            }
         }
-    }
+
+        // level up
+        if (totalCorrect == MAX_ATTEMPTS) {
+            currentLevel++;
+            currentRange += LEVEL_RANGE_CHANGE;
+            totalCorrect = 0;
+            totalIncorrect = 0;
+            cout << "Level up! Now you're at Level " << currentLevel
+                 << " with range 1 to " << currentRange << endl;
+        }
+
+        // level down
+        if (totalIncorrect == MAX_ATTEMPTS && currentLevel > 1) {
+            currentLevel--;
+            currentRange -= LEVEL_RANGE_CHANGE;
+            if (currentRange < LEVEL_RANGE_CHANGE) currentRange = LEVEL_RANGE_CHANGE;
+            totalCorrect = 0;
+            totalIncorrect = 0;
+            cout << "Level down. You're now Level " << currentLevel << endl;
+        }
+
+        // ask to continue
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        while (true) {
+            cout << "Do you want another question? (yes/no): ";
+            getline(cin, userInput);
+            for (char &ch : userInput) ch = tolower(ch);
+            if (userInput == "y" || userInput == "yes" || userInput == "n" || userInput == "no") break;
+        }
+
+    } while (userInput == "y" || userInput == "yes");
+
+    cout << "Thanks for playing " << userName << "! Goodbye." << endl;
+    return 0;
 }
-
-          
-if (totalCorrect == MAX_ATTEMPTS) {
-    mathLevel++;
-    totalCorrect = 0;
-    totalIncorrect = 0;
-    currentRange += LEVEL_RANGE_CHANGE;
-	
-    cout << "Level up! You’re now Level " << mathLevel
-		
-         << ". Range is now 1.." << currentRange << endl;
-	
-} else if (totalIncorrect == MAX_ATTEMPTS && mathLevel > 1) {
-    mathLevel--;
-    totalCorrect = 0;
-    totalIncorrect = 0;
-    currentRange -= LEVEL_RANGE_CHANGE;
-    if (currentRange < LEVEL_RANGE_CHANGE) currentRange = LEVEL_RANGE_CHANGE;
-	
-    cout << "Level down. You’re now Level " << mathLevel
-         << ". Range is now 1.." << currentRange << endl;
-} 
-
-// Clear leftover newline 
-cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-// wording + lowercase handling change
-while (true) {
-    cout << "Do you want another question (y=yes | n=no)? ";
-    getline(cin, userInput);
-
-    for (char &ch : userInput) {
-        ch = static_cast<char>(tolower(static_cast<unsigned char>(ch)));
-    }
-
-    if (userInput == "y" || userInput == "yes" ||
-        userInput == "n" || userInput == "no") {
-        break;
-    } else {
-        cout << "Please type y, yes, n, or no." << endl << endl;
-    }
-}
-
-} while (userInput == "yes" || userInput == "y");
-
-cout << "Thanks for using Math Tutor. Good luck on your test!" << endl;
-return 0;
