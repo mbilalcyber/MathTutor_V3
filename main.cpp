@@ -67,46 +67,48 @@ int main() {
     cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -       " << endl;
     cout << endl;
 
+	// Ask for user name 
+    cout << "Enter your full name: ";
     getline(cin, userName);
     if (userName.empty()) userName = "User";
-    cout << "Welcome " << userName << " to the Silly Simple Math Tutor!\n";
+    cout << "Welcome " << userName << " to the Silly Simple Math Tutor!" << endl << endl;
+
 
 
     // Build the question and compute the correct answer 
-switch (mathType) {
-    case MT_ADD: {
-        mathSymbol = '+';
-        correctAnswer = leftNum + rightNum;
-        break;
-    }
-    case MT_SUB: {
-        mathSymbol = '-';
-        if (leftNum < rightNum) {
-            temp = leftNum;
-            leftNum = rightNum;
-            rightNum = temp;
-        }
-        correctAnswer = leftNum - rightNum;
-        break;
-    }
-    case MT_MUL: {
-        mathSymbol = '*';
-        correctAnswer = leftNum * rightNum;
-        break;
-    }
-    case MT_DIV: {
-        // keep division as an integer result
-        mathSymbol = '/';
-        correctAnswer = leftNum;  // original left is the answer
-        leftNum *= rightNum;      // make dividend a multiple of divisor
-        break;
-    }
-    default: {
+do {
+        // generate question numbers
+        leftNum = (rand() % currentRange) + 1;
+        rightNum = (rand() % currentRange) + 1;
+        MathType mathType = static_cast<MathType>((rand() % 4) + 1);
+
+        char mathSymbol = '?';
+
+        // switch for math operation
+        switch (mathType) {
+            case MT_ADD:
+                mathSymbol = '+';
+                correctAnswer = leftNum + rightNum;
+                break;
+            case MT_SUB:
+                mathSymbol = '-';
+                if (leftNum < rightNum) { temp = leftNum; leftNum = rightNum; rightNum = temp; }
+                correctAnswer = leftNum - rightNum;
+                break;
+            case MT_MUL:
+                mathSymbol = '*';
+                correctAnswer = leftNum * rightNum;
+                break;
+            case MT_DIV:
+                mathSymbol = '/';
+                correctAnswer = leftNum;
+                leftNum *= rightNum;
+                break;
+            default:
         cout << "Invalid math type: " << static_cast<int>(mathType) << endl;
-        cout << "Exiting due to invalid operation. Please notify the instructor." << endl;
+        cout << "Exiting due to invalid operation. Please notify Bilal and Jacob." << endl;
         return -1;
     }
-}
 
 	
 for (int i = 1; i <= MAX_ATTEMPTS; ++i) {
@@ -135,57 +137,49 @@ for (int i = 1; i <= MAX_ATTEMPTS; ++i) {
     }
 }
 
-            // if answer is correct, it'll say congrats then break
-            if (userAnswer == correctAnswer) {
-                totalCorrect ++;
-                cout << "Correct!" << endl;
-                break;
-            }
-            //if incorrect, it'll say incorrect and break
-            if (i >= maxAttemps) {
-                cout << "Incorrect. The correct answer was " << correctAnswer << endl;
-                totalIncorrect++;
-            }
+          
+if (totalCorrect == MAX_ATTEMPTS) {
+    mathLevel++;
+    totalCorrect = 0;
+    totalIncorrect = 0;
+    currentRange += LEVEL_RANGE_CHANGE;
+	
+    cout << "Level up! You’re now Level " << mathLevel
+		
+         << ". Range is now 1.." << currentRange << endl;
+	
+} else if (totalIncorrect == MAX_ATTEMPTS && mathLevel > 1) {
+    mathLevel--;
+    totalCorrect = 0;
+    totalIncorrect = 0;
+    currentRange -= LEVEL_RANGE_CHANGE;
+    if (currentRange < LEVEL_RANGE_CHANGE) currentRange = LEVEL_RANGE_CHANGE;
+	
+    cout << "Level down. You’re now Level " << mathLevel
+         << ". Range is now 1.." << currentRange << endl;
+} 
 
-            // Tells them how many attempts are left
-            else {
-                cout << "You have " << maxAttemps - i << " attempts left" << endl;
-                cout << "Dont give up!" << endl;
-            }
-        } // ends user attempts
+// Clear leftover newline 
+cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
+// wording + lowercase handling change
+while (true) {
+    cout << "Do you want another question (y=yes | n=no)? ";
+    getline(cin, userInput);
 
+    for (char &ch : userInput) {
+        ch = static_cast<char>(tolower(static_cast<unsigned char>(ch)));
+    }
 
-        // checks for 3 correct answers then increases level up
-        // it will increase the range to add extra 10 numbers
-        if (totalCorrect == 3) {
-            currentLevel++;
-            totalCorrect = 0;   // new level means clen record
-            totalIncorrect = 0; // goes back to defaults
-            currentRange += levelRange;
-            cout << "Congrats, you leveled up!" << endl;
-            cout << "Your new level is " << currentLevel << " with numbers ranging from 1 to " << currentRange << endl;
-        }
+    if (userInput == "y" || userInput == "yes" ||
+        userInput == "n" || userInput == "no") {
+        break;
+    } else {
+        cout << "Please type y, yes, n, or no." << endl << endl;
+    }
+}
 
-        // checks for 3 wrong answers then lowers their level if its above level 1
-        if (totalIncorrect >= 3 && currentLevel > 1) {
-            currentLevel --;
-            totalCorrect = 0;      // resets to 0
-            totalIncorrect = 0;    // back to defaults
-            currentRange -= levelRange;
-            if (currentRange < levelRange) currentRange = levelRange; //
-            cout << "You leveled down. You're now on Level " << currentLevel
-                 << " with numbers ranging from 1 to " << currentRange << endl;
+} while (userInput == "yes" || userInput == "y");
 
-        } // end of main question loop // DEBBIE: this is not the end of main loop - this is the end of the if statement
-
-		// DEBBIE: you need to have the code logic here for y/n input that I provided you in the assignment
-
-		// DEBBIE: this is where the end of the do-while should be for y/yes answer
-
-    cout << "Thanks for playing, " << userName << "!" << endl;
-    return 0;
-
-        return 0; // DEBBIE: don't need
-    } // don't need if you end your while loop on like 206 like I stated
-} // DEBBIE: end of main function
+cout << "Thanks for using Math Tutor. Good luck on your test!" << endl;
+return 0;
